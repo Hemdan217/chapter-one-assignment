@@ -82,8 +82,10 @@ export function AddTaskInput({ onAdd }: AddTaskInputProps) {
           <Pressable
             style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
             onPress={handleSubmit}
+            accessibilityRole="button"
+            accessibilityLabel="Add task"
           >
-            <Ionicons name="add" size={28} color="#fff" />
+            <Ionicons name="add" size={28} color={theme.colors.textOnPrimary} />
           </Pressable>
         </View>
       </View>
