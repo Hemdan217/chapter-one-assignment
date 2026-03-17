@@ -6,3 +6,6 @@ export interface Task {
   title: string;
   completed: boolean;
 }
+
+/** Filter for task list: all, active only, or completed only. */
+export type TaskFilter = 'all' | 'active' | 'completed';
