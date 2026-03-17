@@ -89,7 +89,7 @@ export function HomeScreen() {
           color: theme.colors.textMuted,
           fontWeight: '500',
         },
-        filterLabelActive: { color: '#fff' },
+        filterLabelActive: { color: theme.colors.textOnPrimary },
       }),
     [theme]
   );
@@ -99,7 +99,7 @@ export function HomeScreen() {
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <View style={styles.titleIcon}>
-            <Ionicons name="list" size={22} color="#fff" />
+            <Ionicons name="list" size={22} color={theme.colors.textOnPrimary} />
           </View>
           <Text style={styles.title}>{copy.appTitle}</Text>
         </View>
@@ -119,6 +119,9 @@ export function HomeScreen() {
             key={f}
             style={[styles.filterBtn, filter === f && styles.filterBtnActive]}
             onPress={() => setFilter(f)}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: filter === f }}
+            accessibilityLabel={`Filter: ${FILTER_LABELS[f]}`}
           >
             <Text style={[styles.filterLabel, filter === f && styles.filterLabelActive]}>
               {FILTER_LABELS[f]}
