@@ -82,15 +82,18 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   );
 
   return (
-    <View style={styles.card}>
+    <View style={styles.card} accessibilityRole="listitem">
       <Pressable
         style={({ pressed }) => [styles.mainRow, pressed && styles.mainRowPressed]}
         onPress={() => onToggle(task.id)}
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: task.completed }}
+        accessibilityLabel={`${task.completed ? 'Mark incomplete' : 'Mark complete'}: ${task.title}`}
       >
         <View style={styles.checkboxRow}>
           {task.completed ? (
             <View style={styles.checkboxFilled}>
-              <Ionicons name="checkmark" size={16} color="#fff" />
+              <Ionicons name="checkmark" size={16} color={theme.colors.textOnPrimary} />
             </View>
           ) : (
             <View style={styles.checkboxEmpty} />
@@ -107,6 +110,8 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         <Pressable
           style={({ pressed }) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
           onPress={handleDeletePress}
+          accessibilityRole="button"
+          accessibilityLabel={`Delete task: ${task.title}`}
         >
           <Ionicons name="trash-outline" size={22} color={theme.colors.danger} />
         </Pressable>
