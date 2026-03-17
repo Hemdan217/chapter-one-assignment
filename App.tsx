@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemeProvider, useTheme } from './src/constants/theme';
+import { useTasks } from './src/hooks/useTasks';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 
 type Tab = 'todos' | 'settings';
 
-/** Root content: tab bar (Todos | Settings) and theme-aware StatusBar. Task state is in useTasks inside HomeScreen. */
+/** Root content: tab bar (Todos | Settings) and theme-aware StatusBar. Task state lives here so it survives tab switches. */
 function AppContent() {
   const { theme, isDark } = useTheme();
   const [tab, setTab] = useState<Tab>('todos');
+  const tasksState = useTasks();
 
   return (
     <>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
       <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
         <View style={styles.content}>
-          {tab === 'todos' ? <HomeScreen /> : <SettingsScreen />}
+          {tab === 'todos' ? <HomeScreen {...tasksState} /> : <SettingsScreen />}
         </View>
         <View style={[styles.tabBar, { backgroundColor: theme.colors.surface, borderTopColor: theme.colors.border }]}>
           <Pressable

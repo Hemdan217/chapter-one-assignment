@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTasks } from '../hooks/useTasks';
 import { TaskList } from '../components/TaskList';
 import { AddTaskInput } from '../components/AddTaskInput';
 import { EmptyState } from '../components/EmptyState';
 import { copy } from '../constants/copy';
 import { useTheme } from '../constants/theme';
 import type { TaskFilter } from '../types/task';
+import type { useTasks } from '../hooks/useTasks';
 
 const FILTER_LABELS: Record<TaskFilter, string> = {
   all: 'All',
@@ -15,9 +15,10 @@ const FILTER_LABELS: Record<TaskFilter, string> = {
   completed: 'Completed',
 };
 
-export function HomeScreen() {
+type HomeScreenProps = React.ComponentProps<ReturnType<typeof useTasks>>;
+
+export function HomeScreen({ tasks, addTask, toggleComplete, deleteTask }: HomeScreenProps) {
   const { theme } = useTheme();
-  const { tasks, addTask, toggleComplete, deleteTask } = useTasks();
   const [filter, setFilter] = useState<TaskFilter>('all');
 
   const filteredTasks = useMemo(() => {

@@ -82,7 +82,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   );
 
   return (
-    <View style={styles.card} accessibilityRole="listitem">
+    <View style={styles.card}>
       <Pressable
         style={({ pressed }) => [styles.mainRow, pressed && styles.mainRowPressed]}
         onPress={() => onToggle(task.id)}

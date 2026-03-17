@@ -2,6 +2,10 @@
 
 A React Native (Expo) task manager app for the Chapter One tech screen. Add tasks, mark them complete, delete them, and filter by All / Active / Completed. **Task state is kept in local component state only** (no backend, no persistence, no global state for tasks).
 
+**Contents:** [Features](#features) · [Screenshots](#screenshots) · [Architecture](#architecture-overview) · [How to run](#how-to-run) · [Estimation](#estimation) · [Tech stack](#tech-stack) · [Design decisions](#design-decisions) · [Third-party libraries](#third-party-libraries)
+
+---
+
 ## Features
 
 - **Add task** — Rounded input bar + Add (plus) button; empty input is ignored and the field clears after add.
@@ -12,6 +16,38 @@ A React Native (Expo) task manager app for the Chapter One tech screen. Add task
 - **Bottom tab** — **Todos** (task list) and **Settings** (dark/light mode toggle). Task data lives only on the Todos flow; Settings is for UI preference.
 - **Dark / light mode** — Toggle in Settings; theme (colors, surfaces) updates across the app. Implemented with a small React Context for UI only; task state remains in the `useTasks` hook.
 
+---
+
+## Screenshots
+
+### Todos screen (dark theme)
+
+| All tasks | Active filter | Completed (empty state) |
+|-----------|----------------|---------------------------|
+| ![Todos – All](docs/screenshots/todos-all.png) | ![Todos – Active](docs/screenshots/todos-active.png) | ![Todos – Completed empty](docs/screenshots/todos-completed-empty.png) |
+
+- **All** — Full task list with progress bar (“X of Y completed”), checkboxes, and delete icons.
+- **Active** — Only uncompleted tasks.
+- **Completed** — Only completed tasks; shows empty state when none.
+
+### Delete confirmation
+
+| Dialog |
+|--------|
+| ![Delete confirmation](docs/screenshots/delete-confirmation.png) |
+
+Tapping the trash icon shows a native confirmation (“Delete task?” / “This cannot be undone.”) with Cancel and Delete before removing the task.
+
+### Settings
+
+| Dark mode toggle |
+|------------------|
+| ![Settings](docs/screenshots/settings.png) |
+
+Settings screen with Dark mode switch. Theme (dark/light) applies across the app; task list is unchanged when switching tabs.
+
+---
+
 ## Architecture overview
 
 - **Screens:** `HomeScreen` (Todos) composes header, progress, `AddTaskInput`, filter tabs, and `TaskList`; `SettingsScreen` holds the dark-mode switch. Both use hooks and pass data/callbacks down.
@@ -19,6 +55,8 @@ A React Native (Expo) task manager app for the Chapter One tech screen. Add task
 - **State:** `useTasks` holds the **tasks array and all CRUD handlers** (add, toggle complete, delete). Task logic is fully local to this hook. `ThemeProvider` holds only UI preference (dark/light) and does not manage tasks.
 - **Types:** `Task` and `TaskFilter` in `src/types/task.ts`.
 - **Constants:** Theme (dark/light) and copy in `src/constants/` (e.g. `theme.tsx`, `copy.ts`).
+
+---
 
 ## How to run
 
@@ -65,6 +103,8 @@ A React Native (Expo) task manager app for the Chapter One tech screen. Add task
 - **Metro / Node errors (e.g. `availableParallelism`)** → Use Node 20.19+ (`node -v`).
 - **Web:** Delete uses `window.confirm`; on native it uses `Alert.alert`.
 
+---
+
 ## Estimation
 
 | Item | Estimate |
@@ -74,11 +114,15 @@ A React Native (Expo) task manager app for the Chapter One tech screen. Add task
 | **Run tests** (`npm test`) | ~5–15 s |
 | **Scope** | Single-screen task CRUD + Settings; local state only; no backend or persistence. |
 
+---
+
 ## Tech stack
 
 - **React Native** — UI framework
 - **Expo** — Tooling, dev server, and native build pipeline
 - **TypeScript** — Typing for components, hooks, and utils
+
+---
 
 ## Design decisions
 
@@ -86,6 +130,8 @@ A React Native (Expo) task manager app for the Chapter One tech screen. Add task
 - **Bottom tab:** Simple two-tab layout (Todos, Settings) for clear navigation; task list and settings stay separate.
 - **Delete confirmation:** `Alert` on native and `window.confirm` on web so delete works everywhere.
 - **Filter in screen:** Filter state (All/Active/Completed) lives in `HomeScreen`; the list is derived and passed to `TaskList`. The hook stays focused on CRUD.
+
+---
 
 ## Third-party libraries
 
