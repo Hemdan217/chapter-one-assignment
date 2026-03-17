@@ -95,6 +95,7 @@ Settings screen with Dark mode switch. Theme (dark/light) applies across the app
    ```bash
    npm test
    ```
+   Runs Jest (useTasks hook + TaskItem component). Uses `jsdom` so React Testing Library’s `renderHook` works; no extra setup needed after `npm install`.
 
 ### Useful instructions
 

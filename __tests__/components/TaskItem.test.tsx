@@ -23,6 +23,18 @@ function wrap(component: React.ReactElement) {
 }
 
 describe('TaskItem', () => {
+  const originalError = console.error;
+  beforeEach(() => {
+    console.error = jest.fn((msg) => {
+      if (typeof msg === 'string' && (msg.includes('act(...)') || msg.includes('Icon inside a test'))) return;
+      originalError(msg);
+    });
+  });
+
+  afterEach(() => {
+    console.error = originalError;
+  });
+
   it('renders task title', () => {
     render(wrap(<TaskItem task={mockTask} onToggle={noop} />));
     expect(screen.getByText('Test task')).toBeTruthy();
